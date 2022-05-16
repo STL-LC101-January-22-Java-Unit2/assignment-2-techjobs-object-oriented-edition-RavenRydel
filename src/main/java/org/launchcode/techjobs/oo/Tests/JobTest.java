@@ -1,42 +1,33 @@
-package org.launchcode.techjobs.oo.test;
+package org.launchcode.techjobs.oo.Tests;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
 import org.launchcode.techjobs.oo.*;
 
 import static org.junit.Assert.*;
-import static org.junit.Assert.assertEquals;
 
-/**
- * Created by LaunchCode
- */
-@RunWith(JUnit4.class)
 public class JobTest {
     Job jobOne;
     Job jobTwo;
     Job jobThree;
     Job jobFour;
 
-//    @Before
-//    public void init() {
-//        jobOne = new Job();
-//        jobTwo = new Job();
-//    }
+    @Before
+    public void initJob() {
+        jobOne = new Job();
+        jobTwo = new Job();
+        jobThree = new Job("Product tester", new Employer("ACME"), new Location("Desert"), new PositionType("Quality control"), new CoreCompetency("Persistence"));
+        jobFour = new Job("Product tester", new Employer("ACME"), new Location(""), new PositionType("Quality control"), new CoreCompetency("Persistence"));
+    }
 
     @Test
     public void testSettingJobId() {
-        jobOne = new Job();
-        jobTwo = new Job();
         assertEquals(1, jobOne.getId());
         assertEquals(2, jobTwo.getId());
     }
 
     @Test
     public void testJobConstructorSetsAllFields() {
-        jobThree = new Job("Product tester", new Employer("ACME"), new Location("Desert"), new PositionType("Quality control"), new CoreCompetency("Persistence"));
         assertTrue(jobThree.getName() instanceof String);
         assertEquals("Product tester", jobThree.getName());
 
@@ -55,21 +46,17 @@ public class JobTest {
 
     @Test
     public void testJobsForEquality() {
-        jobThree = new Job("Product tester", new Employer("ACME"), new Location("Desert"), new PositionType("Quality control"), new CoreCompetency("Persistence"));
-        jobFour = new Job("Product tester", new Employer("ACME"), new Location(""), new PositionType("Quality control"), new CoreCompetency("Persistence"));
         assertFalse(jobFour.equals(jobThree));
     }
 
     @Test
     public void testToStringStartsAndEndsWithNewLine() {
-        jobThree = new Job("Product tester", new Employer("ACME"), new Location("Desert"), new PositionType("Quality control"), new CoreCompetency("Persistence"));
-        Assert.assertEquals('\n', jobThree.toString().split("")[0].charAt(0));
-        Assert.assertEquals('\n', jobThree.toString().split("")[jobThree.toString().length() - 1].charAt(0));
+        assertEquals("\n", jobThree.toString().split("")[0]);
+        assertEquals("\n", jobThree.toString().split("")[jobThree.toString().length() - 1]);
     }
 
     @Test
     public void testToStringContainsCorrectLabelsAndData(){
-        jobThree = new Job("Product tester", new Employer("ACME"), new Location("Desert"), new PositionType("Quality control"), new CoreCompetency("Persistence"));
         assertEquals("\n" +
                 "ID: " + jobThree.getId() + "\n" +
                 "Name: " + jobThree.getName() + "\n" +
@@ -82,7 +69,6 @@ public class JobTest {
 
     @Test
     public void testToStringHandlesEmptyField() {
-        jobFour = new Job("Product tester", new Employer("ACME"), new Location(""), new PositionType("Quality control"), new CoreCompetency("Persistence"));
         assertEquals("\n" +
                 "ID: " + jobFour.getId() + "\n" +
                 "Name: " + jobFour.getName() + "\n" +
@@ -92,6 +78,5 @@ public class JobTest {
                 "Core Competency: " + jobFour.getCoreCompetency()
                 + "\n", jobFour.toString());
     }
-
 
 }
